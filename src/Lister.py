@@ -54,6 +54,7 @@ class Lister():
                         #if self.debug: print "%s is a file" % file
                         size = os.path.getsize(fpath)
                         track = self.chooseprocessor(fpath, size)
+                        #print track.info.preset
                         if track != None:
                             '''get the album'''
                             album = self.getalbum(track)

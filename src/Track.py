@@ -23,6 +23,10 @@ class Track(dict):
         self.length = int(audiofile.info.length)
         self.filesize = filesize
         try:
+            self.preset = audiofile.info.preset
+        except:
+            self.preset = "Unidientified preset"
+        try:
             self.bitrate = audiofile.info.bitrate
         except:
             self.bitrate = 0

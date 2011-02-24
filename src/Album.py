@@ -15,6 +15,7 @@ class Album():
         self.length = 0
         self.filesize = 0
         self.format = format
+        self.preset = ""
 
     def __setattr__(self, title, value):
         '''title: the title of the album'''
@@ -75,13 +76,18 @@ class Album():
             tmp.append(track.bitrate)
             self.bitrate = str(int((sum(tmp) / len(tmp)) / 1000)) # 1000 instead of 1024
         return self.bitrate
-
+    
     def calclength(self):
         '''Calculate the length of the album'''
         self.length = 0
         for track in self.tracks:
             self.length = self.length + track.length
         return self.GetInHMS(self.length)
+
+    def getpreset(self):
+        track = self.tracks[0]
+        self.preset = track.preset
+        return self.preset
 
     def calcfilesize(self):
         '''Calculate the size (in MB) of the album'''
