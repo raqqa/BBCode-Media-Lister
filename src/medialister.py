@@ -20,15 +20,13 @@ if options.debug:
 if options.type:
     print "Type set to %" % options.type
 if options.path:
-    good = os.path.isdir(options.path)
-    if good:
-        print "Path set to %s" % options.path
-    else:
+    if not os.path.isdir(options.path):
         sys.exit('The path %s does not exist' % options.path)
+    print "Path set to %s" % options.path
 
 print "\n3Calm's Media Lister\n=======\n"
 lister = Lister.Lister(debug=options.debug, type=options.type, path=options.path, outputfile=options.write)
-ltest = lister.walktree(lister.fpath)
+ltest  = lister.walktree(lister.fpath)
 
 if options.write:
     f = open(options.write, 'w')

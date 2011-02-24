@@ -6,7 +6,6 @@ import logging
 
 class Album():
     '''represents an album'''
-
     def __init__(self, title, artist, date, format):
         self.title = title
         self.artist = artist
@@ -29,7 +28,6 @@ class Album():
         except:
             raise AttributeError
 
-
     def __getattr__(self, length):
         '''length: the length of the Album'''
         try:
@@ -37,14 +35,12 @@ class Album():
         except:
             raise AttributeError
 
-
     def __getattr__(self, bitrate):
         '''bitrate: the average numeric bitrate'''
         try:
             return self.calcbitrate()
         except:
             raise AttributeError
-
 
     def __getattr__(self, tracks):
         '''The tracks in the album'''
@@ -54,14 +50,12 @@ class Album():
         except:
             raise AttributeError
 
-
     def __getattr__(self, artist):
         '''The artist'''
         try:
             return 'ass ' + self.artist
         except:
             raise AttributeError
-
 
     def __getattr__(self, filesize):
         '''The filesize'''
@@ -70,20 +64,17 @@ class Album():
         except:
             raise AttributeError
 
-
     def addtrack(self, track):
         '''Add a track'''
         self.tracks.append(track)
-
 
     def calcbitrate(self):
         '''Calculate the bitrate of the album'''
         tmp = []
         for track in self.tracks:
             tmp.append(track.bitrate)
-            self.bitrate = str(int((sum(tmp) / len(tmp)) / 1024))
+            self.bitrate = str(int((sum(tmp) / len(tmp)) / 1000)) # 1000 instead of 1024
         return self.bitrate
-
 
     def calclength(self):
         '''Calculate the length of the album'''
@@ -92,13 +83,15 @@ class Album():
             self.length = self.length + track.length
         return self.GetInHMS(self.length)
 
-
     def calcfilesize(self):
-        '''Calculate the length of the album'''
+        '''Calculate the size (in MB) of the album'''
+        tmp = 0
         for track in self.tracks:
-            self.filesize = self.filesize + track.filesize
-        return self.filesize
-
+            tmp += track.filesize
+            #self.filesize = (self.filesize + track.filesize)
+        self.filesize = tmp
+        return "%.2f" % (tmp / (1024*1024.0))
+        #return self.filesize
 
     def tracksindicts(self):
         '''MAKE A LIST OF DICTS'''
@@ -107,7 +100,6 @@ class Album():
             tmp.append(track.dictrep)
             sortedtracks = sorted(tmp, key=lambda k: k['track'])
         return sortedtracks
-
 
     def gettracks(self):
         return sorted(self.tracks, key=lambda track: track.track)
@@ -121,7 +113,6 @@ class Album():
         minutes = seconds / 60
         seconds -= 60*minutes
         return '%02s:%02s' % (bminutes, seconds)
-
 
     def __str__(self):
         return str(self.title)

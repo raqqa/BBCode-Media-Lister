@@ -4,9 +4,7 @@ MediaLister
 
 class Track(dict):
     """represents a track in an album"""
-
     def __init__(self, audiofile, filesize):
-        
         try:
             '''MP3'''
             self.track = audiofile.tags["TRCK"].text[0]
@@ -21,7 +19,6 @@ class Track(dict):
             self.artist = audiofile.tags["artist"][0]
             self.album = audiofile.tags["album"][0]
             self.date = audiofile.tags["date"][0]
-
         self.track = self.tracknumber(self.track)
         self.length = int(audiofile.info.length)
         self.filesize = filesize
@@ -29,7 +26,6 @@ class Track(dict):
             self.bitrate = audiofile.info.bitrate
         except:
             self.bitrate = 0
-
 
     def __setattr__(self, track, value):
         """track: the numeric track"""
@@ -43,7 +39,6 @@ class Track(dict):
         except:
             raise AttributeError
 
-
     def __setattr__(self, title, value):
         """title: the title of the track"""
         try:
@@ -55,7 +50,6 @@ class Track(dict):
             return self.title
         except:
             raise AttributeError
-
 
     def __setattr__(self, length, value):
         """length: the length of the track"""
@@ -69,7 +63,6 @@ class Track(dict):
         except:
             raise AttributeError
 
-
     def __setattr__(self, bitrate, value):
         """bitrate: the numeric bitrate"""
         try:
@@ -82,7 +75,6 @@ class Track(dict):
         except:
             raise AttributeError
 
-
     def __getattr__(self, displength):
         """displength: display length"""
         try:
@@ -90,10 +82,8 @@ class Track(dict):
         except:
             raise AttributeError
 
-
     def getkbps(self):
-        return int(self.bitrate/1024)
-
+        return int(self.bitrate/1000) # should be 1000, not 1024!
 
     def tracknumber(self, track):
         '''Flip the track to int for sorting'''
@@ -106,10 +96,7 @@ class Track(dict):
             track = str(0) + str(track)
         return track
 
-
     def __str__(self):
         return "%s. %s"%(self.track, self.title)
-
-
     def __repr__(self):
         return self.__str__()
